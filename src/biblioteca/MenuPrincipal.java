@@ -19,6 +19,9 @@ import javax.swing.JFileChooser;
 public class MenuPrincipal extends javax.swing.JFrame {
     private File file;
     private String archivo;
+    private RegistrarEstudiante regEstudiante;
+    private RegistrarLibro regLibro;
+    private RealizarPrestamo realizarPrestamo;
     /**
      * Creates new form MenuPrincipal
      */
@@ -41,16 +44,16 @@ public class MenuPrincipal extends javax.swing.JFrame {
         btnCargar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        lblRegLibro = new javax.swing.JLabel();
-        lblRegEstudiante = new javax.swing.JLabel();
-        lblReportes = new javax.swing.JLabel();
-        lblPrestamo = new javax.swing.JLabel();
         lblMensajeError = new javax.swing.JLabel();
+        btnRegLibro = new javax.swing.JButton();
+        btnRegEstudiante = new javax.swing.JButton();
+        btnRealizarPrestamos = new javax.swing.JButton();
+        btnGenerarReportes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lblTitulo.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
-        lblTitulo.setText("Biblioteca");
+        lblTitulo.setText("BIBLIOTECA");
 
         txtPath.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -74,63 +77,34 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jLabel3.setText("Ingrese el Archivo que desea Cargar");
 
-        lblRegLibro.setBackground(java.awt.Color.lightGray);
-        lblRegLibro.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
-        lblRegLibro.setForeground(java.awt.Color.black);
-        lblRegLibro.setText("Registrar Libro");
-        lblRegLibro.setOpaque(true);
-        lblRegLibro.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblRegLibroMouseExited(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblRegLibroMouseEntered(evt);
-            }
-        });
-
-        lblRegEstudiante.setBackground(java.awt.Color.lightGray);
-        lblRegEstudiante.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
-        lblRegEstudiante.setForeground(java.awt.Color.black);
-        lblRegEstudiante.setText("Registrar Estudiante");
-        lblRegEstudiante.setOpaque(true);
-        lblRegEstudiante.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblRegEstudianteMouseExited(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblRegEstudianteMouseEntered(evt);
-            }
-        });
-
-        lblReportes.setBackground(java.awt.Color.lightGray);
-        lblReportes.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
-        lblReportes.setForeground(java.awt.Color.black);
-        lblReportes.setText("Generar Reportes");
-        lblReportes.setOpaque(true);
-        lblReportes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblReportesMouseExited(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblReportesMouseEntered(evt);
-            }
-        });
-
-        lblPrestamo.setBackground(java.awt.Color.lightGray);
-        lblPrestamo.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
-        lblPrestamo.setForeground(java.awt.Color.black);
-        lblPrestamo.setText("Realizar Prestamo");
-        lblPrestamo.setOpaque(true);
-        lblPrestamo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblPrestamoMouseExited(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblPrestamoMouseEntered(evt);
-            }
-        });
-
         lblMensajeError.setForeground(new java.awt.Color(245, 6, 6));
+
+        btnRegLibro.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        btnRegLibro.setText("Registrar libro");
+        btnRegLibro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegLibroActionPerformed(evt);
+            }
+        });
+
+        btnRegEstudiante.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        btnRegEstudiante.setText("Registrar Estudiante");
+        btnRegEstudiante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegEstudianteActionPerformed(evt);
+            }
+        });
+
+        btnRealizarPrestamos.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        btnRealizarPrestamos.setText("Realizar prestamo");
+        btnRealizarPrestamos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRealizarPrestamosActionPerformed(evt);
+            }
+        });
+
+        btnGenerarReportes.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        btnGenerarReportes.setText("Generar reportes");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -143,58 +117,59 @@ public class MenuPrincipal extends javax.swing.JFrame {
                         .addComponent(jLabel2))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(59, 59, 59)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(lblMensajeError, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnCargar))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(txtPath, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnFileChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(lblMensajeError, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnCargar))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(txtPath, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnFileChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblRegLibro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblRegEstudiante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblReportes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblPrestamo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(252, 252, 252)
+                    .addComponent(btnRegEstudiante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRegLibro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRealizarPrestamos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnGenerarReportes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(lblTitulo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(235, 235, 235))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(24, 24, 24)
                 .addComponent(lblTitulo)
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
-                    .addComponent(lblRegLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jLabel2)
+                        .addComponent(btnRegLibro)
+                        .addGap(4, 4, 4)
+                        .addComponent(btnRegEstudiante)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnFileChooser)
-                            .addComponent(txtPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnCargar)
-                            .addComponent(lblMensajeError, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnRealizarPrestamos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnGenerarReportes))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblRegEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(35, 35, 35))
+                        .addGap(13, 13, 13)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(btnFileChooser)
+                                    .addComponent(txtPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(lblMensajeError, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnCargar))))
+                .addGap(55, 55, 55))
         );
 
         pack();
@@ -207,38 +182,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void btnFileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFileChooserActionPerformed
         txtPath.setText(BuscarDireccion());
     }//GEN-LAST:event_btnFileChooserActionPerformed
-
-    private void lblRegLibroMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegLibroMouseEntered
-        lblRegLibro.setBackground(Color.white);
-    }//GEN-LAST:event_lblRegLibroMouseEntered
-
-    private void lblRegLibroMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegLibroMouseExited
-        lblRegLibro.setBackground(Color.lightGray);
-    }//GEN-LAST:event_lblRegLibroMouseExited
-
-    private void lblRegEstudianteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegEstudianteMouseEntered
-         lblRegEstudiante.setBackground(Color.white);
-    }//GEN-LAST:event_lblRegEstudianteMouseEntered
-
-    private void lblPrestamoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPrestamoMouseEntered
-        lblPrestamo.setBackground(Color.white);
-    }//GEN-LAST:event_lblPrestamoMouseEntered
-
-    private void lblReportesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblReportesMouseEntered
-        lblReportes.setBackground(Color.white);
-    }//GEN-LAST:event_lblReportesMouseEntered
-
-    private void lblRegEstudianteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegEstudianteMouseExited
-       lblRegEstudiante.setBackground(Color.lightGray);
-    }//GEN-LAST:event_lblRegEstudianteMouseExited
-
-    private void lblPrestamoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPrestamoMouseExited
-        lblPrestamo.setBackground(Color.lightGray);
-    }//GEN-LAST:event_lblPrestamoMouseExited
-
-    private void lblReportesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblReportesMouseExited
-        lblReportes.setBackground(Color.lightGray);
-    }//GEN-LAST:event_lblReportesMouseExited
 
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
         if(file==null){
@@ -255,6 +198,25 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnCargarActionPerformed
+
+    private void btnRegLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegLibroActionPerformed
+        // TODO add your handling code here:
+        regLibro = new RegistrarLibro();
+        regLibro.setVisible(true);
+    }//GEN-LAST:event_btnRegLibroActionPerformed
+
+    private void btnRegEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegEstudianteActionPerformed
+        // TODO add your handling code here:
+        regEstudiante = new RegistrarEstudiante();
+        regEstudiante.setVisible(true);
+    }//GEN-LAST:event_btnRegEstudianteActionPerformed
+
+    private void btnRealizarPrestamosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarPrestamosActionPerformed
+        // TODO add your handling code here:
+        realizarPrestamo = new RealizarPrestamo();
+        realizarPrestamo.setVisible(true);
+        
+    }//GEN-LAST:event_btnRealizarPrestamosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -275,13 +237,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCargar;
     private javax.swing.JButton btnFileChooser;
+    private javax.swing.JButton btnGenerarReportes;
+    private javax.swing.JButton btnRealizarPrestamos;
+    private javax.swing.JButton btnRegEstudiante;
+    private javax.swing.JButton btnRegLibro;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel lblMensajeError;
-    private javax.swing.JLabel lblPrestamo;
-    private javax.swing.JLabel lblRegEstudiante;
-    private javax.swing.JLabel lblRegLibro;
-    private javax.swing.JLabel lblReportes;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtPath;
     // End of variables declaration//GEN-END:variables
