@@ -5,14 +5,16 @@
  */
 package biblioteca;
 
+import java.io.Serializable;
+
 /**
  *
  * @author sergio
  */
-public class Estudiante {
+public class Estudiante implements Serializable{
     private int carnet;
     private String nombre;
-    private int carrer;
+    private int carrera;
 
     public int getCarnet() {
         return carnet;
@@ -23,12 +25,12 @@ public class Estudiante {
     }
 
     public int getCarrer() {
-        return carrer;
+        return carrera;
     }
 
     public Estudiante(int carnet, String nombre, int carrer) {
         this.carnet = carnet;
         this.nombre = nombre;
-        this.carrer = carrer;
+        this.carrera = carrer;
     }
 }

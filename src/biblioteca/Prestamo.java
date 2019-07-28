@@ -5,16 +5,17 @@
  */
 package biblioteca;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  *
  * @author sergio
  */
-public class Prestamo {
+public class Prestamo implements Serializable{
     private String codigoLibro;
     private int carnetEstudiante;
-    private LocalDateTime fecha;
+    private LocalDate fecha;
 
     public String getCodigoLibro() {
         return codigoLibro;
@@ -24,11 +25,11 @@ public class Prestamo {
         return carnetEstudiante;
     }
 
-    public LocalDateTime getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public Prestamo(String codigoLibro, int carnetEstudiante, LocalDateTime fecha) {
+    public Prestamo(String codigoLibro, int carnetEstudiante, LocalDate fecha) {
         this.codigoLibro = codigoLibro;
         this.carnetEstudiante = carnetEstudiante;
         this.fecha = fecha;
