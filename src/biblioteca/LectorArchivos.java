@@ -28,6 +28,28 @@ public class LectorArchivos {
         
         return libro;
     }
+    protected static Libro[] cargarLibrosExistentes() throws IOException, FileNotFoundException, ClassNotFoundException{
+        Libro[] libro=null;
+        File carpeta = ManejadorDeArchivos.CARPETA_LIBROS;
+        if (carpeta.exists()) {
+            libro=new Libro[carpeta.list().length];
+            for (int i = 0; i < carpeta.list().length; i++) {
+                libro[i]= buscarLibro(carpeta.list()[i]);
+            }
+        }
+        return libro;
+    }
+    protected static Estudiante[] cargarEstudianteExistentes() throws IOException, FileNotFoundException, ClassNotFoundException{
+        Estudiante[] libro=null;
+        File carpeta = ManejadorDeArchivos.CARPETA_ESTUDIANTES;
+        if (carpeta.exists()) {
+            libro=new Estudiante[carpeta.list().length];
+            for (int i = 0; i < carpeta.list().length; i++) {
+                libro[i]= buscarEstudiante(carpeta.list()[i]);
+            }
+        }
+        return libro;
+    }
     public static Estudiante buscarEstudiante(String carnet) throws FileNotFoundException, IOException, ClassNotFoundException{
         Estudiante estudiante;
         File archivo = new File(ManejadorDeArchivos.CARPETA_ESTUDIANTES+"/"+carnet);

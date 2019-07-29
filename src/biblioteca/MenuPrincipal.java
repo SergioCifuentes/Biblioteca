@@ -27,7 +27,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form MenuPrincipal
      */
-    public MenuPrincipal() {
+    public MenuPrincipal() throws IOException, FileNotFoundException, ClassNotFoundException {
         initComponents();
     }
 
