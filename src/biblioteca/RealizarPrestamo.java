@@ -6,6 +6,7 @@
 package biblioteca;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -124,7 +125,7 @@ public class RealizarPrestamo extends javax.swing.JFrame {
         // TODO add your handling code here:
         String codigoLibro = txtFdCodigoLibro.getText();
         int carnet = Integer.parseInt(txtFdCarnet.getText());
-        LocalDateTime fecha = LocalDateTime.now();
+        LocalDate fecha = LocalDate.now();
         Prestamo prestamo = new Prestamo(codigoLibro, carnet, fecha);
         try {
             ManejadorDeArchivos.crearArchivoPrestamo(prestamo);
