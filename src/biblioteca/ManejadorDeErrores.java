@@ -185,7 +185,7 @@ public class ManejadorDeErrores {
         return mensajeError;
     }
 
-    private static boolean verificarCodigo(String codigo) {
+    protected  static boolean verificarCodigo(String codigo) {
         int CANTIDAD_NUMEROS = 3;
         int CANTIDAD_MAYUSCULAS = 3;
         boolean correcto = true;
@@ -227,7 +227,7 @@ public class ManejadorDeErrores {
         }
         return correcto;
     }
-    private static boolean  verificarCarrera(String carrera) {
+    protected  static boolean  verificarCarrera(String carrera) {
         boolean  correcto;
         int inicio = 1;
         int fin = 5;
