@@ -66,7 +66,6 @@ public class Tabla extends javax.swing.JDialog {
         if (identificador.equals(ManejadorDeArchivos.IDENTIFICADOR_LIBRO)) {
             if (libros != null) {
                 DefaultTableModel model = (DefaultTableModel) tblRegistros.getModel();
-                System.out.println(libros.length);
                 for (int i = 0; i < libros.length; i++) {//Creacion de Celdas
                     model.addRow(new Object[]{"", "", "", ""});
                 }
