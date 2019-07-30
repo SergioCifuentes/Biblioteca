@@ -5,21 +5,25 @@
  */
 package biblioteca;
 
+import static biblioteca.ManejadorDeErrores.ERROR_CANTIDAD_INVALIDO;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author grifiun
  */
 public class RegistrarLibro extends javax.swing.JFrame {
-    
+    private final String LIBRO_REGISTRADO_EXITOSAMENTE = "El libro ha sido registrado de forma exitosa";
+    private final String NO_ES_UN_ENTERO = "La cantidad ingresada no es un entero";
     /**
      * Creates new form RegistrarLibro
      */
     public RegistrarLibro() {
         initComponents();
+        
     }
 
     /**
@@ -43,7 +47,7 @@ public class RegistrarLibro extends javax.swing.JFrame {
         btnGuardar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
         jLabel1.setText("REGISTRO LIBROS");
@@ -83,17 +87,18 @@ public class RegistrarLibro extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addComponent(jLabel4)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(btnSalir)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnGuardar))
-                        .addComponent(txtFdTitulo, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txtFdAutor, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txtFdCodigo)
-                        .addComponent(txtFdCantidad, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnSalir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnGuardar))
+                    .addComponent(txtFdTitulo, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtFdAutor, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtFdCodigo)
+                    .addComponent(txtFdCantidad, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(jLabel1)))
                 .addContainerGap(154, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -117,11 +122,11 @@ public class RegistrarLibro extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtFdCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnGuardar)
                     .addComponent(btnSalir))
-                .addGap(24, 24, 24))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         pack();
@@ -129,19 +134,47 @@ public class RegistrarLibro extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        String titulo = txtFdTitulo.getText(); //asignamos el valor obtenido del JTextField llamado "txtFdTitulo" a la variable String "titulo"
-        String autor = txtFdAutor.getText(); //asignamos el valor obtenido del JTextField llamado "txtFdAutor" a la variable String "autor"
-        String codigo = txtFdCodigo.getText(); //asignamos el valor obtenido del JTextField llamado "txtFdCodigo" a la variable String "codigo"
-        int cantidad = Integer.parseInt(txtFdCantidad.getText()); //convertimos el texto obtenido del JTextField "txtFdCantidad" a un valor entero
+        verificarEntradaDatos(txtFdTitulo.getText(), txtFdAutor.getText(), txtFdCodigo.getText(), txtFdCantidad.getText());
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void verificarEntradaDatos(String titulo, String autor, String codigo, String cant){
+        if ("".equals(titulo) || "".equals(autor) || "".equals(codigo) || "".equals(cant)){
+            JOptionPane.showMessageDialog(this, ManejadorDeErrores.ERROR_PARAMETRO_FALTANTE);        
+        }
+        else{           
+            try {
+                    int cantidad = Integer.parseInt(cant);
+                    if(ManejadorDeErrores.verificarCodigo(codigo) == false)
+                        JOptionPane.showMessageDialog(this, ManejadorDeErrores.ERROR_CODIGO_INVALIDO);
+                    else{
+                        guardarLibro(titulo, autor, codigo, cantidad);
+                    }
+                        
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, NO_ES_UN_ENTERO); 
+                }           
+            
+        }
+    }
+    
+    private void limpiarCajasTexto(){
+        txtFdAutor.setText("");
+        txtFdCantidad.setText("");
+        txtFdCodigo.setText("");
+        txtFdTitulo.setText("");
+    }
+        
+    private void guardarLibro(String titulo, String autor, String codigo, int cantidad){
         Libro libro = new Libro(titulo, autor, codigo, cantidad); //creamos un objeto de tipo libro utilizando su contructor
         try {
             ManejadorDeArchivos.crearArchivoLibro(libro);
+            JOptionPane.showMessageDialog(this, LIBRO_REGISTRADO_EXITOSAMENTE);
+            limpiarCajasTexto();
         } catch (IOException ex) {
             Logger.getLogger(RegistrarLibro.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-    }//GEN-LAST:event_btnGuardarActionPerformed
-
+    }
+    
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
         dispose();
