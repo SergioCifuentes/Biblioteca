@@ -6,6 +6,7 @@
 package biblioteca;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  *
@@ -15,6 +16,15 @@ public class Estudiante implements Serializable{
     private int carnet;
     private String nombre;
     private int carrera;
+    LocalDate fechaDeNacimiento;
+
+    public LocalDate getFechaDeNacimiento() {
+        return fechaDeNacimiento;
+    }
+
+    public void setFechaDeNacimiento(LocalDate fechaDeNacimiento) {
+        this.fechaDeNacimiento = fechaDeNacimiento;
+    }
 
     public int getCarnet() {
         return carnet;
@@ -32,5 +42,6 @@ public class Estudiante implements Serializable{
         this.carnet = carnet;
         this.nombre = nombre;
         this.carrera = carrer;
+        this.fechaDeNacimiento=null;
     }
 }

@@ -21,6 +21,7 @@ public class ManejadorDeErrores {
     public static int PARAMETROS_LIBRO = 4;
     public static int PARAMETROS_ESTUDIANTE = 3;
     public static int PARAMETROS_PRESTAMO = 3;
+   
     public static String ERROR_CODIGO_INVALIDO = "Error!! Codigo invalido";
     public static String ERROR_ARCHIVO_EXISTENTE = "Error!! Ya Existente";
     public static String ERROR_LIBOR_NO_EXISTENTE = "Error!! Libro no exsite";
@@ -189,7 +190,8 @@ public class ManejadorDeErrores {
         int CANTIDAD_NUMEROS = 3;
         int CANTIDAD_MAYUSCULAS = 3;
         boolean correcto = true;
-        if (codigo.indexOf("-") != CANTIDAD_NUMEROS) {
+        if (codigo.length()==CANTIDAD_NUMEROS+CANTIDAD_MAYUSCULAS+1) {
+           if (codigo.indexOf("-") != CANTIDAD_NUMEROS) {
             correcto = false;
         } else {
             try {
@@ -209,11 +211,15 @@ public class ManejadorDeErrores {
             } catch (NumberFormatException e) {
                 correcto = false;
             }
+        } 
+        }else{
+            correcto=false;
         }
+        
         return correcto;
     }
 
-    private static String verificarCarnet(String carnet) {
+    protected  static String verificarCarnet(String carnet) {
         String correcto = null;
         try {
             int numero = Integer.valueOf(carnet);
