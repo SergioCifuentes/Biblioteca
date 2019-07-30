@@ -6,8 +6,10 @@
 package biblioteca;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,6 +22,7 @@ public class RegistrarEstudiante extends javax.swing.JFrame {
      */
     public RegistrarEstudiante() {
         initComponents();
+        
     }
 
     /**
@@ -31,20 +34,27 @@ public class RegistrarEstudiante extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lblRegistroEstudiantes = new javax.swing.JLabel();
         txtFdNombre = new javax.swing.JTextField();
         txtFdCarnet = new javax.swing.JTextField();
         txtFdCarrera = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        lblNombre = new javax.swing.JLabel();
+        lblCarnet = new javax.swing.JLabel();
+        lblCarrera = new javax.swing.JLabel();
         btnSalir = new javax.swing.JButton();
+        txtFdDia = new javax.swing.JTextField();
+        txtFdMes = new javax.swing.JTextField();
+        txtFdAnio = new javax.swing.JTextField();
+        lblFechaNacimiento = new javax.swing.JLabel();
+        lblAnio = new javax.swing.JLabel();
+        lblMes = new javax.swing.JLabel();
+        lblDia = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
-        jLabel1.setText("REGISTRO ESTUDIANTES");
+        lblRegistroEstudiantes.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
+        lblRegistroEstudiantes.setText("REGISTRO ESTUDIANTES");
 
         txtFdCarnet.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -59,11 +69,11 @@ public class RegistrarEstudiante extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Nombre");
+        lblNombre.setText("Nombre");
 
-        jLabel3.setText("Carnet");
+        lblCarnet.setText("Carnet");
 
-        jLabel4.setText("Carrera");
+        lblCarrera.setText("Carrera");
 
         btnSalir.setText("Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -72,56 +82,90 @@ public class RegistrarEstudiante extends javax.swing.JFrame {
             }
         });
 
+        lblFechaNacimiento.setText("Fecha de nacimiento");
+
+        lblAnio.setText("Año:");
+
+        lblMes.setText("Mes:");
+
+        lblDia.setText("Dia:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(134, 134, 134)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnSalir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnGuardar))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtFdCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtFdCarnet, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                .addGap(42, 42, 42)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblNombre)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtFdNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(23, 23, 23)))
-                .addContainerGap(135, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblRegistroEstudiantes)
+                        .addGap(23, 23, 23))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(lblCarrera)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtFdCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(lblCarnet)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtFdCarnet, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblFechaNacimiento)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnSalir)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnGuardar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblDia)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtFdDia, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblMes)
+                                .addGap(6, 6, 6)
+                                .addComponent(txtFdMes, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblAnio)
+                                .addGap(1, 1, 1)
+                                .addComponent(txtFdAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(49, 49, 49)
-                .addComponent(jLabel1)
+                .addComponent(lblRegistroEstudiantes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtFdNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(lblNombre))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtFdCarnet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(lblCarnet))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtFdCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(lblCarrera))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtFdAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDia)
+                    .addComponent(txtFdDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMes)
+                    .addComponent(txtFdMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblFechaNacimiento))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnSalir))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -133,19 +177,91 @@ public class RegistrarEstudiante extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
+        verificarEntradaDatos(txtFdCarnet.getText(), txtFdNombre.getText(), txtFdCarrera.getText(), txtFdDia.getText(), txtFdMes.getText(), txtFdAnio.getText());
         
-        int carnet = Integer.parseInt(txtFdCarnet.getText()); //convertimos en un valor entero el texto obtenido del JTextField "txtFdCarnet"
-        String nombre = txtFdNombre.getText(); //asignamos a la variable nombre el texto obtenido del JTextField "txtFdNombre"
-        int carrera = Integer.parseInt(txtFdCarrera.getText()); //convertimos en un valor entero el texto obtenido del JTextField "txtFdCarrera"
+    }//GEN-LAST:event_btnGuardarActionPerformed
+    
+    private void verificarEntradaDatos(String carnetF, String nombre, String carreraF, String diaF, String mesF, String anioF){
+        
+        if ("".equals(carnetF) || "".equals(nombre) || "".equals(carreraF) || "".equals(diaF) || "".equals(mesF) || "".equals(anioF)){
+            JOptionPane.showMessageDialog(this, "Faltan datos por ingresar");        
+        }
+        else{ 
+            try {
+                    int carnet = Integer.parseInt(carnetF);                    
+                    int dia = Integer.parseInt(diaF);
+                    int mes = Integer.parseInt(mesF);
+                    int anio = Integer.parseInt(anioF);
+                    
+                    if(ManejadorDeErrores.verificarCarrera(carreraF)){
+                        int carrera = Integer.parseInt(carreraF); 
+                        verificarErrorDatos(nombre, carnetF, carrera, dia, mes, anio, carnet);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(this, "La carrera ingresada es invalida"); 
+                    }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "El carnet, carrera, dia, mes o año no es un numero entero"); 
+                }
+        }
+    }
+    
+    private void verificarErrorDatos(String nombre, String carnetF, int carrera, int dia, int mes, int anio, int carnet){
+        if(revisarRangoDia(dia) && revisarRangoMes(mes) && revisarRangoAnio(anio)){
+            /*if(ManejadorDeErrores.verificarCarnet(carnetF) == null){
+                registrarEstudiante(carnet, nombre, carrera, dia, mes, anio);
+                JOptionPane.showMessageDialog(this, "Estudiante registrado correctamente");
+                limpiarCajasTexto():
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "carnet invalido");
+            }*/
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Fecha invalida");
+        }
+                            
+    }
+    
+    private void registrarEstudiante(int carnet, String nombre, int carrera, int dia, int mes, int fecha){
         Estudiante estudiante = new Estudiante(carnet, nombre, carrera); //Creamos un objeto de tipo Estudiante utilizando su contructor
         try {
             ManejadorDeArchivos.crearArchivoEstudiantes(estudiante);
+            /*
+            LocalDate fecha = LocalDate.of(anio, mes, dia)
+            estudiante.setFecha(fecha);   */
         } catch (IOException ex) {
             Logger.getLogger(RegistrarEstudiante.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-    }//GEN-LAST:event_btnGuardarActionPerformed
-
+    }
+    
+    private boolean revisarRangoDia(int dia){
+        return(revisarRango(1, 31, dia));            
+    }
+    
+    private boolean revisarRangoMes(int mes){        
+        return revisarRango(1, 12, mes);
+    }
+    
+    private boolean revisarRangoAnio(int anio){        
+        return revisarRango(1, 2019, anio);
+    }
+    
+    private boolean revisarRango(int inicio, int fin, int varRevisar){
+        if(varRevisar >= inicio && varRevisar <= fin)
+            return true;        
+        return false;
+    }
+    
+    private void limpiarCajasTexto(){
+        txtFdAnio.setText("");
+        txtFdCarnet.setText("");
+        txtFdCarrera.setText("");
+        txtFdDia.setText("");
+        txtFdMes.setText("");
+        txtFdNombre.setText("");
+    }
+    
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
         dispose();
@@ -189,12 +305,19 @@ public class RegistrarEstudiante extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel lblAnio;
+    private javax.swing.JLabel lblCarnet;
+    private javax.swing.JLabel lblCarrera;
+    private javax.swing.JLabel lblDia;
+    private javax.swing.JLabel lblFechaNacimiento;
+    private javax.swing.JLabel lblMes;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblRegistroEstudiantes;
+    private javax.swing.JTextField txtFdAnio;
     private javax.swing.JTextField txtFdCarnet;
     private javax.swing.JTextField txtFdCarrera;
+    private javax.swing.JTextField txtFdDia;
+    private javax.swing.JTextField txtFdMes;
     private javax.swing.JTextField txtFdNombre;
     // End of variables declaration//GEN-END:variables
 }
