@@ -208,14 +208,14 @@ public class RegistrarEstudiante extends javax.swing.JFrame {
     
     private void verificarErrorDatos(String nombre, String carnetF, int carrera, int dia, int mes, int anio, int carnet){
         if(revisarRangoDia(dia) && revisarRangoMes(mes) && revisarRangoAnio(anio)){
-            /*if(ManejadorDeErrores.verificarCarnet(carnetF) == null){
+            if(ManejadorDeErrores.verificarCarnet(carnetF) == null){
                 registrarEstudiante(carnet, nombre, carrera, dia, mes, anio);
                 JOptionPane.showMessageDialog(this, "Estudiante registrado correctamente");
-                limpiarCajasTexto():
+                limpiarCajasTexto();
             }
             else{
                 JOptionPane.showMessageDialog(this, "carnet invalido");
-            }*/
+            }
         }
         else{
             JOptionPane.showMessageDialog(this, "Fecha invalida");
@@ -223,13 +223,13 @@ public class RegistrarEstudiante extends javax.swing.JFrame {
                             
     }
     
-    private void registrarEstudiante(int carnet, String nombre, int carrera, int dia, int mes, int fecha){
+    private void registrarEstudiante(int carnet, String nombre, int carrera, int dia, int mes, int anio){
         Estudiante estudiante = new Estudiante(carnet, nombre, carrera); //Creamos un objeto de tipo Estudiante utilizando su contructor
         try {
             ManejadorDeArchivos.crearArchivoEstudiantes(estudiante);
-            /*
-            LocalDate fecha = LocalDate.of(anio, mes, dia)
-            estudiante.setFecha(fecha);   */
+            
+            LocalDate fecha = LocalDate.of(anio, mes, dia);
+            estudiante.setFechaDeNacimiento(fecha);   
         } catch (IOException ex) {
             Logger.getLogger(RegistrarEstudiante.class.getName()).log(Level.SEVERE, null, ex);
         }
