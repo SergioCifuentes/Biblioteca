@@ -10,13 +10,14 @@ package biblioteca;
  * @author sergio
  */
 public class Ordenaciones {
+    //Identificadores Para ordenar
     public static final String IDENTFICADOR_DE_ORDEN_CODIGO = "Codigo";
     public static final String IDENTFICADOR_DE_ORDEN_TITULO = "Titulo";
     public static final String IDENTFICADOR_DE_ORDEN_AUTOR = "Autor";
     public static final String IDENTFICADOR_DE_ORDEN_CARNET = "Carnet";
     public static final String IDENTFICADOR_DE_ORDEN_NOMBRE = "Nombre";
     public static final String IDENTFICADOR_DE_ORDEN_CARRERA = "Carrera";
-    
+    //Metodo que ordena libros dependiendo del identificador que se envie como parametro
     protected static Libro[] ordenarLibros(Libro[] librosAOrdenar,String identificador){
        Libro[] librosOrdenados = new Libro[librosAOrdenar.length];
        librosOrdenados=librosAOrdenar;
@@ -25,19 +26,19 @@ public class Ordenaciones {
             auxiliar = i;            
             Libro libroMayor = librosAOrdenar[i];
             switch (identificador) {
-                case IDENTFICADOR_DE_ORDEN_CODIGO://Por Puntos estado
+                case IDENTFICADOR_DE_ORDEN_CODIGO://Por Codigo
                     while (auxiliar > 0 && libroMayor.getCodigo().compareTo(librosOrdenados[auxiliar-1].getCodigo())<0) {
                         librosOrdenados[auxiliar] = librosOrdenados[auxiliar - 1];
                         auxiliar--;
                     }
                     break;
-                case IDENTFICADOR_DE_ORDEN_TITULO://Por Orden Alfabetico
+                case IDENTFICADOR_DE_ORDEN_TITULO://Por Orden de titulo
                     while (auxiliar > 0 && libroMayor.getTitulo().compareToIgnoreCase(librosOrdenados[auxiliar - 1].getTitulo()) < 0) {
                         librosOrdenados[auxiliar] = librosOrdenados[auxiliar - 1];
                         auxiliar--;
                     }
                     break;
-                case IDENTFICADOR_DE_ORDEN_AUTOR://Por Fecha EnemigosDestruidos
+                case IDENTFICADOR_DE_ORDEN_AUTOR://Por orden autor
                     while (auxiliar > 0 && libroMayor.getAutor().compareTo(librosOrdenados[auxiliar-1].getAutor())<0) {
                         librosOrdenados[auxiliar] = librosOrdenados[auxiliar - 1];
                         auxiliar--;
@@ -48,7 +49,8 @@ public class Ordenaciones {
         }
        return librosOrdenados;    
     }
- protected static Estudiante[] ordenarEstudiantes(Estudiante[] estudiantesAOrdenar,String identificador){
+    //Metodo que ordena estudiantes dependiendo del identificador que se envie como parametro
+    protected static Estudiante[] ordenarEstudiantes(Estudiante[] estudiantesAOrdenar,String identificador){
        Estudiante[] estudiantesOrdenados = new Estudiante[estudiantesAOrdenar.length];
        estudiantesOrdenados=estudiantesAOrdenar;
         int auxiliar;
@@ -56,7 +58,7 @@ public class Ordenaciones {
             auxiliar = i;            
             Estudiante estudianteMayor = estudiantesAOrdenar[i];
             switch (identificador) {
-                case IDENTFICADOR_DE_ORDEN_CARNET://Por Puntos estado
+                case IDENTFICADOR_DE_ORDEN_CARNET://Por Carnet
                     while (auxiliar > 0 && estudianteMayor.getCarnet()<estudiantesOrdenados[auxiliar-1].getCarnet()) {
                         estudiantesOrdenados[auxiliar] = estudiantesOrdenados[auxiliar - 1];
                         auxiliar--;
@@ -68,7 +70,7 @@ public class Ordenaciones {
                         auxiliar--;
                     }
                     break;
-                case IDENTFICADOR_DE_ORDEN_CARRERA://Por Fecha EnemigosDestruidos
+                case IDENTFICADOR_DE_ORDEN_CARRERA://Por carrera
                     while (auxiliar > 0 && estudianteMayor.getCarrer()<estudiantesOrdenados[auxiliar-1].getCarrer()) {
                         estudiantesOrdenados[auxiliar] = estudiantesOrdenados[auxiliar - 1];
                         auxiliar--;

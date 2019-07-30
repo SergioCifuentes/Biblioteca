@@ -16,26 +16,30 @@ import java.util.Scanner;
  * @author sergio
  */
 public class ManejadorDeArchivos {
-
+    
     public final static File CARPETA_LIBROS = new File("Libros");
+    //Identificadores y parametros para libros
     public static String IDENTIFICADOR_LIBRO = "LIBRO";
     public static String IDENTIFICADOR_TITULO = "TITULO";
     public static String IDENTIFICADOR_AUTOR = "AUTOR";
     public static String IDENTIFICADOR_CODIGO = "CODIGO";
     public static String IDENTIFICADOR_CANTIDAD = "CANTIDAD";
+    
     public final static File CARPETA_ESTUDIANTES = new File("Estudiantes");
+    //Identificadores y parametros para estudiantes
     public static String IDENTIFICADOR_ESTUDIANTE = "ESTUDIANTE";
     public static String IDENTIFICADOR_CARNET = "CARNET";
     public static String IDENTIFICADOR_NOMBRE = "NOMBRE";
     public static String IDENTIFICADOR_CARRERA = "CARRERA";
     public final static File CARPETA_PRESTAMO = new File("Prestamos");
+    //Identificadores y parametros para prestamos
     public static String IDENTIFICADOR_PRESTAMO = "PRESTAMO";
     public static String IDENTIFICADOR_CODIGO_LIBRO = "CODIGOLIBRO";
     public static String IDENTIFICADOR_FECHA = "FECHA";
 
     public static String PALABRA_COMPLETADO = "Completado!!!";
     public static String PALABRA_INVALIDO = "Identificador Invalido!";
-
+//Metodo devuelve un conjunto de strings que inica que operaciones se realizaron y cuales no
     protected static ArrayList<String> cargarArchivo(File file) throws FileNotFoundException, IOException, ClassNotFoundException {
         ArrayList<String> lines = new ArrayList<>();
         ArrayList<String> resultado = new ArrayList<>();
@@ -53,6 +57,7 @@ public class ManejadorDeArchivos {
                 for (int j = 0; j < parametrosLibros.length; j++) {
                     parametrosLibros[j] = lines.get(j + i + 1);
                 }
+                //Llama al metodo para verificar si los parametros tienen errores
                 String mensajeErrorPosible = ManejadorDeErrores.verificarErroresLibro(parametrosLibros);
                 if (mensajeErrorPosible == null) {
                     Libro libroNuevo = crearObjetoLibro(parametrosLibros);
@@ -60,10 +65,12 @@ public class ManejadorDeArchivos {
                     resultado.add(IDENTIFICADOR_LIBRO + " " + libroNuevo.getCodigo() + " " + PALABRA_COMPLETADO);
                     i = i + ManejadorDeErrores.PARAMETROS_LIBRO;
                 } else {
+                    //En caso de Error
                     resultado.add(IDENTIFICADOR_LIBRO+" "+mensajeErrorPosible);
                 }
                 //En caso de estudiante
             } else if (lines.get(i).equals(IDENTIFICADOR_ESTUDIANTE)) {
+                //Llama al metodo para verificar si los parametros del estudiante tiene errores
                 String[] parametrosEstudiante = new String[ManejadorDeErrores.PARAMETROS_ESTUDIANTE];
                 for (int j = 0; j < parametrosEstudiante.length; j++) {
                     parametrosEstudiante[j] = lines.get(j + i + 1);
@@ -75,10 +82,12 @@ public class ManejadorDeArchivos {
                     resultado.add(IDENTIFICADOR_ESTUDIANTE + " " + estudianteNuevo.getCarnet() + " " + PALABRA_COMPLETADO);
                     i = i + ManejadorDeErrores.PARAMETROS_ESTUDIANTE;
                 } else {
+                    //En caso de error
                     resultado.add(mensajeErrorPosible);
                 }
                 //En caso De Pestamo
             } else if (lines.get(i).equals(IDENTIFICADOR_PRESTAMO)) {
+                //Llama al metodo que verifica si existen errores para el prestamo
                 String[] parametrosPrestamo = new String[ManejadorDeErrores.PARAMETROS_PRESTAMO];
                 for (int j = 0; j < parametrosPrestamo.length; j++) {
                     parametrosPrestamo[j] = lines.get(j + i + 1);
@@ -90,6 +99,7 @@ public class ManejadorDeArchivos {
                     resultado.add(IDENTIFICADOR_PRESTAMO + " " + prestamoNuevo.getCodigoLibro() + " - " + prestamoNuevo.getCarnetEstudiante() + " " + PALABRA_COMPLETADO);
                     i = i + ManejadorDeErrores.PARAMETROS_PRESTAMO;
                 } else {
+                //En caso de error
                     resultado.add(mensajeErrorPosible);
                 }
                 //Palabra Invalida
@@ -100,7 +110,7 @@ public class ManejadorDeArchivos {
         }
         return resultado;
     }
-
+//Crea el archivo de libro en binario
     protected static void crearArchivoLibro(Libro libroAGuardar) throws FileNotFoundException, IOException {
         if (CARPETA_LIBROS.exists() == false) {
             CARPETA_LIBROS.mkdir();
@@ -109,7 +119,7 @@ public class ManejadorDeArchivos {
         ObjectOutputStream guardar = new ObjectOutputStream(new FileOutputStream(CARPETA_LIBROS.getAbsolutePath() + "/" + libroAGuardar.getCodigo()));
         guardar.writeObject(libroAGuardar);
     }
-
+//Crea el archivo de Estudiante en binario
     protected static void crearArchivoEstudiantes(Estudiante estudianteAGuardar) throws FileNotFoundException, IOException {
         if (CARPETA_ESTUDIANTES.exists() == false) {
             CARPETA_ESTUDIANTES.mkdir();
@@ -118,7 +128,7 @@ public class ManejadorDeArchivos {
         ObjectOutputStream guardar = new ObjectOutputStream(new FileOutputStream(CARPETA_ESTUDIANTES.getAbsolutePath() + "/" + estudianteAGuardar.getCarnet()));
         guardar.writeObject(estudianteAGuardar);
     }
-
+//Crea el archivo de Prestamo en binario
     protected static void crearArchivoPrestamo(Prestamo prestamoAGuardar) throws FileNotFoundException, IOException {
         if (CARPETA_PRESTAMO.exists() == false) {
             CARPETA_PRESTAMO.mkdir();
@@ -128,7 +138,7 @@ public class ManejadorDeArchivos {
         ObjectOutputStream guardar = new ObjectOutputStream(new FileOutputStream(CARPETA_PRESTAMO.getAbsolutePath() + "/" + numeroDePrestamo));
         guardar.writeObject(prestamoAGuardar);
     }
-
+//Crear un objeto libro
     private static Libro crearObjetoLibro(String[] parametros) {
         String titulo = null;
         String autor = null;
@@ -148,7 +158,7 @@ public class ManejadorDeArchivos {
         }
         return new Libro(titulo, autor, codigo, cantidad);
     }
-
+//Crea el objetp estudiante
     private static Estudiante crearObjetoEstudiante(String[] parametros) {
         int carnet = 0;
         String nombre = null;
@@ -165,7 +175,7 @@ public class ManejadorDeArchivos {
         }
         return new Estudiante(carnet, nombre, carrera);
     }
-
+//Crea el objeto prestamo
     private static Prestamo crearObjetoPrestamo(String[] parametros) {
         String codigoLibro = null;
         int carnetEstudiante = 0;

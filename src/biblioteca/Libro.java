@@ -6,6 +6,7 @@
 package biblioteca;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  *
@@ -16,6 +17,24 @@ public class Libro implements Serializable{
     private String autor;
     private String codigo;
     private int cantidad;
+    private LocalDate fechaPublicacion;
+    private String editorial;
+
+    public LocalDate getFechaPublicacion() {
+        return fechaPublicacion;
+    }
+
+    public void setFehcaPublicacion(LocalDate fehcaPublicacion) {
+        this.fechaPublicacion = fehcaPublicacion;
+    }
+
+    public String getEditorial() {
+        return editorial;
+    }
+
+    public void setEditorial(String Editorial) {
+        this.editorial = Editorial;
+    }
     public Libro(String titulo,String autor,String codigo, int cantidad){
         this.autor=autor;
         this.cantidad=cantidad;

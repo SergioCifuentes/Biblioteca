@@ -36,11 +36,13 @@ public class Tabla extends javax.swing.JDialog {
         lblError.setVisible(false);
         lblTitulo.setText(identificador);
         acendente = false;
+        //Tabla de libros existentes
         if (identificador.equals(ManejadorDeArchivos.IDENTIFICADOR_LIBRO)) {
             agregarColumnasLibros();
             this.libros = LectorArchivos.cargarLibrosExistentes();
             agregarFilas();
             cargarRegistroLibro(LectorArchivos.cargarLibrosExistentes());
+            //Tabla De Estudiantes existentes
         } else if (identificador.equals(ManejadorDeArchivos.IDENTIFICADOR_ESTUDIANTE)) {
             this.estudiante = LectorArchivos.cargarEstudianteExistentes();
             agregarColumnasEstudiantes();
@@ -55,6 +57,8 @@ public class Tabla extends javax.swing.JDialog {
         modelo.addColumn(ManejadorDeArchivos.IDENTIFICADOR_TITULO);
         modelo.addColumn(ManejadorDeArchivos.IDENTIFICADOR_AUTOR);
         modelo.addColumn(ManejadorDeArchivos.IDENTIFICADOR_CANTIDAD);
+        modelo.addColumn("FECHA DE PUBLICACION");
+        modelo.addColumn("EDITORIAL");
     }
 
     private void agregarFilas() {
@@ -73,12 +77,12 @@ public class Tabla extends javax.swing.JDialog {
                 DefaultTableModel model = (DefaultTableModel) tblRegistros.getModel();
                 System.out.println(estudiante.length);
                 for (int i = 0; i < estudiante.length; i++) {//Creacion de Celdas
-                    model.addRow(new Object[]{"", "", "", ""});
+                    model.addRow(new Object[]{"", "", "", "","",""});
                 }
             }
         }
     }
-
+//Arega los libros existentes a la tabla dependeindo del orden acendente o descendente
     private void cargarRegistroLibro(Libro[] libros) {
         if (libros != null) {
             if (acendente == false) {
@@ -87,6 +91,16 @@ public class Tabla extends javax.swing.JDialog {
                     tblRegistros.setValueAt(libros[i].getTitulo(), i, 1);//titulo
                     tblRegistros.setValueAt(libros[i].getAutor(), i, 2);//autor
                     tblRegistros.setValueAt(libros[i].getCantidad(), i, 3);//cantidad
+                    if (libros[i].getFechaPublicacion()!= null) {
+                        tblRegistros.setValueAt(libros[i].getFechaPublicacion().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), i, 4);//Fecha
+                    } else {
+                        tblRegistros.setValueAt("---", i, 4);
+                    }
+                    if (libros[i].getEditorial()!= null) {
+                        tblRegistros.setValueAt(libros[i].getEditorial(),i, 5);//Editorial
+                    } else {
+                        tblRegistros.setValueAt("---", i, 5);
+                    }
                     this.acendente = true;
                 }
             } else {
@@ -96,6 +110,16 @@ public class Tabla extends javax.swing.JDialog {
                     tblRegistros.setValueAt(libros[i].getTitulo(), cont, 1);//titulo
                     tblRegistros.setValueAt(libros[i].getAutor(), cont, 2);//autor
                     tblRegistros.setValueAt(libros[i].getCantidad(), cont, 3);//cantidad
+                    if (libros[i].getFechaPublicacion()!= null) {
+                        tblRegistros.setValueAt(libros[i].getFechaPublicacion().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), cont, 4);//Fecha
+                    } else {
+                        tblRegistros.setValueAt("---", cont, 4);
+                    }
+                    if (libros[i].getEditorial()!= null) {
+                        tblRegistros.setValueAt(libros[i].getEditorial(),cont, 5);//Editorial
+                    } else {
+                        tblRegistros.setValueAt("---", cont, 5);
+                    }
                     cont++;
                     this.acendente = false;
                 }
@@ -108,32 +132,29 @@ public class Tabla extends javax.swing.JDialog {
         }
 
     }
-
+//Arega los estudiantes existentes a la tabla dependeindo del orden acendente o descendente
     private void cargarRegistroEstudiante(Estudiante[] estudiantes) {
         if (estudiantes != null) {
             if (acendente == false) {
                 for (int i = 0; i < estudiantes.length; i++) {
-                    tblRegistros.setValueAt(estudiantes[i].getCarnet(), i, 0);//codigo
-                    tblRegistros.setValueAt(estudiantes[i].getNombre(), i, 1);//titulo
-                    tblRegistros.setValueAt(estudiantes[i].getCarrer(), i, 2);//autor
+                    tblRegistros.setValueAt(estudiantes[i].getCarnet(), i, 0);//carnet
+                    tblRegistros.setValueAt(estudiantes[i].getNombre(), i, 1);//nombre
+                    tblRegistros.setValueAt(estudiantes[i].getCarrer(), i, 2);//carera
                     if (estudiantes[i].getFechaDeNacimiento() != null) {
-                        tblRegistros.setValueAt(estudiantes[i].getFechaDeNacimiento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm")), i, 3);//Fecha
-
+                        tblRegistros.setValueAt(estudiantes[i].getFechaDeNacimiento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), i, 3);//Fecha
                     } else {
                         tblRegistros.setValueAt("---", i, 3);
                     }
-                    
-
                 }
                 this.acendente=true;
             } else {
                 int cont = 0 ;
                 for (int i = estudiantes.length-1; i >= 0; i--) {
-                    tblRegistros.setValueAt(estudiantes[i].getCarnet(), cont, 0);//codigo
-                    tblRegistros.setValueAt(estudiantes[i].getNombre(), cont, 1);//titulo
-                    tblRegistros.setValueAt(estudiantes[i].getCarrer(), cont, 2);//autor
+                    tblRegistros.setValueAt(estudiantes[i].getCarnet(), cont, 0);//carnet
+                    tblRegistros.setValueAt(estudiantes[i].getNombre(), cont, 1);//nombre
+                    tblRegistros.setValueAt(estudiantes[i].getCarrer(), cont, 2);//carera
                     if (estudiantes[i].getFechaDeNacimiento() != null) {
-                        tblRegistros.setValueAt(estudiantes[i].getFechaDeNacimiento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm")), cont, 3);//Fecha
+                        tblRegistros.setValueAt(estudiantes[i].getFechaDeNacimiento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), cont, 3);//Fecha
 
                     } else {
                         tblRegistros.setValueAt("---", cont, 3);
@@ -151,7 +172,7 @@ public class Tabla extends javax.swing.JDialog {
         }
 
     }
-
+//Columnas en caso de tabal de estudisntes
     private void agregarColumnasEstudiantes() {
         DefaultTableModel modelo = (DefaultTableModel) tblRegistros.getModel();
         modelo.addColumn(ManejadorDeArchivos.IDENTIFICADOR_CARNET);
