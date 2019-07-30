@@ -32,6 +32,7 @@ public class ManejadorDeErrores {
     public static String ERROR_CARNET_INSUFICIENTE = "Error!! Carnet debe tener 9 digitos";
     public static String ERROR_CARRERA_INVALIDO = "Error!! Carrera no existente";
     public static String ERROR_PARAMETRO_FALTANTE = "Error!! Parametro Faltante";
+    public static String ERROR_NO_ES_UN_ENTERO = "Error, verifique los campos donde tiene que ir datos enteros";
 
     public static String verificarErroresLibro(String[] linea) throws IOException, FileNotFoundException, ClassNotFoundException {
         String mensajeError = null;
@@ -248,5 +249,44 @@ public class ManejadorDeErrores {
             correcto=false;
         }
         return correcto;
-    }    
+    }  
+    /**
+     * Funcion que revisa si el entero dia esta en el rango de 1 a 31
+     * @param dia
+     * @return 
+     */
+    protected static boolean revisarRangoDia(int dia){ 
+        return(revisarRango(1, 31, dia));   //retorna un valor booleano         
+    }
+    
+    /**
+     * Funcion que revisa si el entero mes esta en el rango de 1 a 12
+     * @param mes
+     * @return 
+     */
+    protected static boolean revisarRangoMes(int mes){        
+        return revisarRango(1, 12, mes); // retorna un booleano
+    }
+    
+    /**
+     * Funcion que revisa si el entero anio esta en el rango de 1 a 2019
+     * @param anio
+     * @return 
+     */
+    protected static boolean revisarRangoAnio(int anio){        
+        return revisarRango(1, 2019, anio); //retorna un booleano
+    }
+    
+    /**
+     * Revisa si la variable varRevisar esta en el rango de "inicio" a "fin"
+     * @param inicio
+     * @param fin
+     * @param varRevisar
+     * @return 
+     */
+    protected static boolean revisarRango(int inicio, int fin, int varRevisar){
+        if(varRevisar >= inicio && varRevisar <= fin)
+            return true; //si es esta en el rango retorna true       
+        return false;
+    }
 }

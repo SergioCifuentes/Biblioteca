@@ -16,7 +16,8 @@ import javax.swing.JOptionPane;
  * @author grifiun
  */
 public class RegistrarLibro extends javax.swing.JFrame {
-    
+    private final String LIBRO_REGISTRADO_EXITOSAMENTE = "El libro ha sido registrado de forma exitosa";
+    private final String NO_ES_UN_ENTERO = "La cantidad ingresada no es un entero";
     /**
      * Creates new form RegistrarLibro
      */
@@ -138,19 +139,19 @@ public class RegistrarLibro extends javax.swing.JFrame {
 
     private void verificarEntradaDatos(String titulo, String autor, String codigo, String cant){
         if ("".equals(titulo) || "".equals(autor) || "".equals(codigo) || "".equals(cant)){
-            JOptionPane.showMessageDialog(this, "Faltan datos por ingresar");        
+            JOptionPane.showMessageDialog(this, ManejadorDeErrores.ERROR_PARAMETRO_FALTANTE);        
         }
         else{           
             try {
                     int cantidad = Integer.parseInt(cant);
                     if(ManejadorDeErrores.verificarCodigo(codigo) == false)
-                        JOptionPane.showMessageDialog(this, "El codigo ingresado es invalido");
+                        JOptionPane.showMessageDialog(this, ManejadorDeErrores.ERROR_CODIGO_INVALIDO);
                     else{
                         guardarLibro(titulo, autor, codigo, cantidad);
                     }
                         
                 } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(this, "La cantidad ingresada no es un entero"); 
+                    JOptionPane.showMessageDialog(this, NO_ES_UN_ENTERO); 
                 }           
             
         }
@@ -167,7 +168,7 @@ public class RegistrarLibro extends javax.swing.JFrame {
         Libro libro = new Libro(titulo, autor, codigo, cantidad); //creamos un objeto de tipo libro utilizando su contructor
         try {
             ManejadorDeArchivos.crearArchivoLibro(libro);
-            JOptionPane.showMessageDialog(this, "Libro ingresado exitosamente");
+            JOptionPane.showMessageDialog(this, LIBRO_REGISTRADO_EXITOSAMENTE);
             limpiarCajasTexto();
         } catch (IOException ex) {
             Logger.getLogger(RegistrarLibro.class.getName()).log(Level.SEVERE, null, ex);

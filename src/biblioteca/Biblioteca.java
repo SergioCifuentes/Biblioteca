@@ -5,6 +5,9 @@
  */
 package biblioteca;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 /**
  *
  * @author sergio
@@ -14,7 +17,7 @@ public class Biblioteca {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, FileNotFoundException, ClassNotFoundException {
         MenuPrincipal nuevo = new MenuPrincipal();
         nuevo.setVisible(true);
     }

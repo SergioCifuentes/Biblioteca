@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  * @author grifiun
  */
 public class RegistrarEstudiante extends javax.swing.JFrame {
-
+    private final String ESTUDIANTE_REGISTRADO_EXITOSAMENTE = "El estudiante ha sido registrado de forma exitosa";
     /**
      * Creates new form RegistrarEstudiante
      */
@@ -50,6 +50,7 @@ public class RegistrarEstudiante extends javax.swing.JFrame {
         lblAnio = new javax.swing.JLabel();
         lblMes = new javax.swing.JLabel();
         lblDia = new javax.swing.JLabel();
+        txtRegistros = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -90,6 +91,13 @@ public class RegistrarEstudiante extends javax.swing.JFrame {
 
         lblDia.setText("Dia:");
 
+        txtRegistros.setText("Ver libros registrados");
+        txtRegistros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRegistrosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -118,6 +126,8 @@ public class RegistrarEstudiante extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(txtRegistros)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnSalir)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnGuardar))
@@ -164,7 +174,8 @@ public class RegistrarEstudiante extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
-                    .addComponent(btnSalir))
+                    .addComponent(btnSalir)
+                    .addComponent(txtRegistros))
                 .addContainerGap())
         );
 
@@ -184,7 +195,7 @@ public class RegistrarEstudiante extends javax.swing.JFrame {
     private void verificarEntradaDatos(String carnetF, String nombre, String carreraF, String diaF, String mesF, String anioF){
         
         if ("".equals(carnetF) || "".equals(nombre) || "".equals(carreraF) || "".equals(diaF) || "".equals(mesF) || "".equals(anioF)){
-            JOptionPane.showMessageDialog(this, "Faltan datos por ingresar");        
+            JOptionPane.showMessageDialog(this, ManejadorDeErrores.ERROR_PARAMETRO_FALTANTE);        
         }
         else{ 
             try {
@@ -198,27 +209,27 @@ public class RegistrarEstudiante extends javax.swing.JFrame {
                         verificarErrorDatos(nombre, carnetF, carrera, dia, mes, anio, carnet);
                     }
                     else{
-                        JOptionPane.showMessageDialog(this, "La carrera ingresada es invalida"); 
+                        JOptionPane.showMessageDialog(this, ManejadorDeErrores.ERROR_CARRERA_INVALIDO); 
                     }
                 } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(this, "El carnet, carrera, dia, mes o año no es un numero entero"); 
+                    JOptionPane.showMessageDialog(this, ManejadorDeErrores.ERROR_NO_ES_UN_ENTERO); 
                 }
         }
     }
     
     private void verificarErrorDatos(String nombre, String carnetF, int carrera, int dia, int mes, int anio, int carnet){
-        if(revisarRangoDia(dia) && revisarRangoMes(mes) && revisarRangoAnio(anio)){
+        if(ManejadorDeErrores.revisarRangoDia(dia) && ManejadorDeErrores.revisarRangoMes(mes) && ManejadorDeErrores.revisarRangoAnio(anio)){
             if(ManejadorDeErrores.verificarCarnet(carnetF) == null){
                 registrarEstudiante(carnet, nombre, carrera, dia, mes, anio);
-                JOptionPane.showMessageDialog(this, "Estudiante registrado correctamente");
+                JOptionPane.showMessageDialog(this, ESTUDIANTE_REGISTRADO_EXITOSAMENTE);
                 limpiarCajasTexto();
             }
             else{
-                JOptionPane.showMessageDialog(this, "carnet invalido");
+                JOptionPane.showMessageDialog(this, ManejadorDeErrores.ERROR_CARNET_INVALIDO);
             }
         }
         else{
-            JOptionPane.showMessageDialog(this, "Fecha invalida");
+            JOptionPane.showMessageDialog(this, ManejadorDeErrores.ERROR_FECHA_INVALIDO);
         }
                             
     }
@@ -233,25 +244,8 @@ public class RegistrarEstudiante extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(RegistrarEstudiante.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    }   
     
-    private boolean revisarRangoDia(int dia){
-        return(revisarRango(1, 31, dia));            
-    }
-    
-    private boolean revisarRangoMes(int mes){        
-        return revisarRango(1, 12, mes);
-    }
-    
-    private boolean revisarRangoAnio(int anio){        
-        return revisarRango(1, 2019, anio);
-    }
-    
-    private boolean revisarRango(int inicio, int fin, int varRevisar){
-        if(varRevisar >= inicio && varRevisar <= fin)
-            return true;        
-        return false;
-    }
     
     private void limpiarCajasTexto(){
         txtFdAnio.setText("");
@@ -266,6 +260,10 @@ public class RegistrarEstudiante extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void txtRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRegistrosActionPerformed
+        
+    }//GEN-LAST:event_txtRegistrosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -319,5 +317,6 @@ public class RegistrarEstudiante extends javax.swing.JFrame {
     private javax.swing.JTextField txtFdDia;
     private javax.swing.JTextField txtFdMes;
     private javax.swing.JTextField txtFdNombre;
+    private javax.swing.JButton txtRegistros;
     // End of variables declaration//GEN-END:variables
 }

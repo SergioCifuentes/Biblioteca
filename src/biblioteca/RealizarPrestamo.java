@@ -10,13 +10,14 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author grifiun
  */
 public class RealizarPrestamo extends javax.swing.JFrame {
-
+    private final String PRESTAMO_REGISTRADO_EXITOSAMENTE = "El prestamo ha sido registrado de forma exitosa";
     /**
      * Creates new form RealizarPrestamo
      */
@@ -153,23 +154,72 @@ public class RealizarPrestamo extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Accion que toma el boton btnGuardar al ser presionado.
+     * Revisa si 
+     * @param evt 
+     */
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        String codigoLibro = txtFdCodigoLibro.getText();
-        int carnet = Integer.parseInt(txtFdCarnet.getText());
-        LocalDate fecha = LocalDate.now();
-        Prestamo prestamo = new Prestamo(codigoLibro, carnet, fecha);
-        try {
-            ManejadorDeArchivos.crearArchivoPrestamo(prestamo);
-        } catch (IOException ex) {
-            Logger.getLogger(RealizarPrestamo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        verificarEntradaDatos(txtFdCodigoLibro.getText(), txtFdCarnet.getText(), txtFdDia.getText(), txtFdMes.getText(), txtFdAnio.getText());        
     }//GEN-LAST:event_btnGuardarActionPerformed
     
-    private void verificarEntradaDatos(){
+    private void verificarEntradaDatos(String codLibro, String carnetF, String diaF, String mesF, String anioF){
+        if ("".equals(codLibro) || "".equals(carnetF) || "".equals(diaF) || "".equals(mesF) || "".equals(anioF)){
+            JOptionPane.showMessageDialog(this, ManejadorDeErrores.ERROR_PARAMETRO_FALTANTE);        
+        }else{
+            try {
+                    int carnet = Integer.parseInt(carnetF);                    
+                    int dia = Integer.parseInt(diaF);
+                    int mes = Integer.parseInt(mesF);
+                    int anio = Integer.parseInt(anioF);
+                    
+                    if(ManejadorDeErrores.verificarCodigo(codLibro) == false)
+                        JOptionPane.showMessageDialog(this, ManejadorDeErrores.ERROR_CODIGO_INVALIDO);
+                    else{
+                        verificarErrorDatos(codLibro, carnetF, dia, mes, anio, carnet);
+                    }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, ManejadorDeErrores.ERROR_NO_ES_UN_ENTERO); 
+                }
+        }
+    }
     
+    private void verificarErrorDatos(String codLibro, String carnetF, int dia, int mes, int anio, int carnet){
+        if(ManejadorDeErrores.revisarRangoDia(dia) && ManejadorDeErrores.revisarRangoMes(mes) && ManejadorDeErrores.revisarRangoAnio(anio)){
+            if(ManejadorDeErrores.verificarCarnet(carnetF) == null){
+                registrarPrestamo(codLibro, carnet, dia, mes, anio);
+                JOptionPane.showMessageDialog(this, PRESTAMO_REGISTRADO_EXITOSAMENTE);
+                limpiarCajasTexto();
+            }
+            else{
+                JOptionPane.showMessageDialog(this, ManejadorDeErrores.ERROR_CARNET_INVALIDO);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(this, ManejadorDeErrores.ERROR_FECHA_INVALIDO);
+        }
+                            
+    }
+    
+    private void registrarPrestamo(String codLibro, int carnet, int dia, int mes, int anio){
+        
+        try {
+            LocalDate fecha = LocalDate.of(anio, mes, dia);
+            Prestamo prestamo = new Prestamo(codLibro, carnet, fecha); //Creamos un objeto de tipo Prestamo utilizando su contructor
+            ManejadorDeArchivos.crearArchivoPrestamo(prestamo);            
+            
+        } catch (IOException ex) {
+            Logger.getLogger(RegistrarEstudiante.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void limpiarCajasTexto(){
+        txtFdAnio.setText("");
+        txtFdCarnet.setText("");        
+        txtFdDia.setText("");
+        txtFdMes.setText("");
+        txtFdCodigoLibro.setText("");
     }
     
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
