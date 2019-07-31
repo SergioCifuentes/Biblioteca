@@ -50,7 +50,7 @@ public class RegistrarEstudiante extends javax.swing.JFrame {
         lblAnio = new javax.swing.JLabel();
         lblMes = new javax.swing.JLabel();
         lblDia = new javax.swing.JLabel();
-        txtRegistros = new javax.swing.JButton();
+        btnEstRegistrados = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -91,10 +91,10 @@ public class RegistrarEstudiante extends javax.swing.JFrame {
 
         lblDia.setText("Dia:");
 
-        txtRegistros.setText("Ver libros registrados");
-        txtRegistros.addActionListener(new java.awt.event.ActionListener() {
+        btnEstRegistrados.setText("Ver estudiantes registrados");
+        btnEstRegistrados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtRegistrosActionPerformed(evt);
+                btnEstRegistradosActionPerformed(evt);
             }
         });
 
@@ -124,25 +124,23 @@ public class RegistrarEstudiante extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblFechaNacimiento)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(txtRegistros)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnSalir)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnGuardar))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblDia)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtFdDia, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lblMes)
-                                .addGap(6, 6, 6)
-                                .addComponent(txtFdMes, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lblAnio)
-                                .addGap(1, 1, 1)
-                                .addComponent(txtFdAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addComponent(lblDia)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtFdDia, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblMes)
+                        .addGap(6, 6, 6)
+                        .addComponent(txtFdMes, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblAnio)
+                        .addGap(1, 1, 1)
+                        .addComponent(txtFdAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnEstRegistrados)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSalir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnGuardar)))
                 .addContainerGap(130, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -175,7 +173,7 @@ public class RegistrarEstudiante extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnSalir)
-                    .addComponent(txtRegistros))
+                    .addComponent(btnEstRegistrados))
                 .addContainerGap())
         );
 
@@ -261,9 +259,16 @@ public class RegistrarEstudiante extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void txtRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRegistrosActionPerformed
-        
-    }//GEN-LAST:event_txtRegistrosActionPerformed
+    private void btnEstRegistradosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstRegistradosActionPerformed
+        try {
+            Tabla tabla = new Tabla(this, true, ManejadorDeArchivos.IDENTIFICADOR_ESTUDIANTE);
+            tabla.setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(RegistrarEstudiante.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(RegistrarEstudiante.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnEstRegistradosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -301,6 +306,7 @@ public class RegistrarEstudiante extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEstRegistrados;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JLabel lblAnio;
@@ -317,6 +323,5 @@ public class RegistrarEstudiante extends javax.swing.JFrame {
     private javax.swing.JTextField txtFdDia;
     private javax.swing.JTextField txtFdMes;
     private javax.swing.JTextField txtFdNombre;
-    private javax.swing.JButton txtRegistros;
     // End of variables declaration//GEN-END:variables
 }

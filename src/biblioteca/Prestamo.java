@@ -16,6 +16,7 @@ public class Prestamo implements Serializable{
     private String codigoLibro;
     private int carnetEstudiante;
     private LocalDate fecha;
+    private boolean estado;
 
     public String getCodigoLibro() {
         return codigoLibro;
@@ -33,5 +34,16 @@ public class Prestamo implements Serializable{
         this.codigoLibro = codigoLibro;
         this.carnetEstudiante = carnetEstudiante;
         this.fecha = fecha;
+        this.estado = true;
     }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+    
+    
 }
