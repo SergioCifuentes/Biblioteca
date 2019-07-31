@@ -42,5 +42,6 @@ public class Prestamo implements Serializable{
         this.codigoLibro = codigoLibro;
         this.carnetEstudiante = carnetEstudiante;
         this.fecha = fecha;
+        this.estado = true;
     }
 }

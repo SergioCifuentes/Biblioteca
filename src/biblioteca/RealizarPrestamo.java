@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
  */
 public class RealizarPrestamo extends javax.swing.JFrame {
     private final String PRESTAMO_REGISTRADO_EXITOSAMENTE = "El prestamo ha sido registrado de forma exitosa";
+    private final String MAS_DE_TRES_LIBROS = "El estudiante ya posee 3 prestamos activos";
     /**
      * Creates new form RealizarPrestamo
      */
@@ -188,9 +189,13 @@ public class RealizarPrestamo extends javax.swing.JFrame {
     private void verificarErrorDatos(String codLibro, String carnetF, int dia, int mes, int anio, int carnet){
         if(ManejadorDeErrores.revisarRangoDia(dia) && ManejadorDeErrores.revisarRangoMes(mes) && ManejadorDeErrores.revisarRangoAnio(anio)){
             if(ManejadorDeErrores.verificarCarnet(carnetF) == null){
-                registrarPrestamo(codLibro, carnet, dia, mes, anio);
-                JOptionPane.showMessageDialog(this, PRESTAMO_REGISTRADO_EXITOSAMENTE);
-                limpiarCajasTexto();
+                if(verificarCantidadPrestamosActivos(carnet) >= 3){
+                    JOptionPane.showMessageDialog(this, MAS_DE_TRES_LIBROS);
+                }else{
+                    registrarPrestamo(codLibro, carnet, dia, mes, anio);
+                    JOptionPane.showMessageDialog(this, PRESTAMO_REGISTRADO_EXITOSAMENTE);
+                    limpiarCajasTexto();
+                }
             }
             else{
                 JOptionPane.showMessageDialog(this, ManejadorDeErrores.ERROR_CARNET_INVALIDO);
@@ -202,8 +207,7 @@ public class RealizarPrestamo extends javax.swing.JFrame {
                             
     }
     
-    private void registrarPrestamo(String codLibro, int carnet, int dia, int mes, int anio){
-        
+    private void registrarPrestamo(String codLibro, int carnet, int dia, int mes, int anio){        
         try {
             LocalDate fecha = LocalDate.of(anio, mes, dia);
             Prestamo prestamo = new Prestamo(codLibro, carnet, fecha); //Creamos un objeto de tipo Prestamo utilizando su contructor
@@ -212,6 +216,28 @@ public class RealizarPrestamo extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(RegistrarEstudiante.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private int verificarCantidadPrestamosActivos(int carnet){
+        Prestamo prestamo[] = null;
+        int cantidadPrestamosActivos = 0;
+        
+        try {
+            prestamo = LectorArchivos.cargarPrestamosExistentes();
+            for(int i = 0; i < prestamo.length; i++){                
+                if(prestamo[i].getCarnetEstudiante() == carnet && prestamo[i].isEstado()){
+                    cantidadPrestamosActivos++;                     
+                }                
+            }
+            
+            return cantidadPrestamosActivos;
+        } catch (IOException ex) {
+            Logger.getLogger(RealizarPrestamo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(RealizarPrestamo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return 0;
     }
     
     private void limpiarCajasTexto(){
