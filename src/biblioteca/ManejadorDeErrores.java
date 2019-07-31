@@ -33,6 +33,8 @@ public class ManejadorDeErrores {
     public static String ERROR_CARRERA_INVALIDO = "Error!! Carrera no existente";
     public static String ERROR_PARAMETRO_FALTANTE = "Error!! Parametro Faltante";
     public static String ERROR_NO_ES_UN_ENTERO = "Error, verifique los campos donde tiene que ir datos enteros";
+    public static String ERROR_NO_HAY_COPIAS_EN_BODEGA = "Error, no hay copias disponibles del libro que quiere prestar";
+    public static String ERROR_CARNET_NO_ACTIVADO = "Error, el carnet del estudiante esta desabilitado";
 
     public static String verificarErroresLibro(String[] linea) throws IOException, FileNotFoundException, ClassNotFoundException {
         String mensajeError = null;
@@ -249,7 +251,8 @@ public class ManejadorDeErrores {
             correcto=false;
         }
         return correcto;
-    }  
+    }
+    
     /**
      * Funcion que revisa si el entero dia esta en el rango de 1 a 31
      * @param dia

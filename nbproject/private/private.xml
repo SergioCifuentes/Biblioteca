@@ -5,7 +5,9 @@
         <group>
             <file>file:/home/grifiun/proyectos/Biblioteca/src/biblioteca/LectorArchivos.java</file>
             <file>file:/home/grifiun/proyectos/Biblioteca/src/biblioteca/ManejadorDeArchivos.java</file>
+            <file>file:/home/grifiun/proyectos/Biblioteca/src/biblioteca/MenuPrincipal.java</file>
             <file>file:/home/grifiun/proyectos/Biblioteca/src/biblioteca/RealizarPrestamo.java</file>
+            <file>file:/home/grifiun/proyectos/Biblioteca/src/biblioteca/Prestamo.java</file>
         </group>
     </open-files>
 </project-private>

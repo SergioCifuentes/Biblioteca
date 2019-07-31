@@ -5,9 +5,12 @@
  */
 package biblioteca;
 
+import java.awt.List;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -19,6 +22,8 @@ import javax.swing.JOptionPane;
 public class RealizarPrestamo extends javax.swing.JFrame {
     private final String PRESTAMO_REGISTRADO_EXITOSAMENTE = "El prestamo ha sido registrado de forma exitosa";
     private final String MAS_DE_TRES_LIBROS = "El estudiante ya posee 3 prestamos activos";
+    private final String PRESTAMO_CANCELADO_EXITOSAMENTE = "El libro ha sido devuelto";
+    private final String REGISTRO_NO_EXISTENTE = "  El registro no ha sido encontrado";
     /**
      * Creates new form RealizarPrestamo
      */
@@ -49,6 +54,7 @@ public class RealizarPrestamo extends javax.swing.JFrame {
         lblMes = new javax.swing.JLabel();
         lblDia = new javax.swing.JLabel();
         lblAnio = new javax.swing.JLabel();
+        comBoxTipoPrestamo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -81,23 +87,24 @@ public class RealizarPrestamo extends javax.swing.JFrame {
 
         lblAnio.setText("Año:");
 
+        comBoxTipoPrestamo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Presta libro", "Regresa libro" }));
+        comBoxTipoPrestamo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comBoxTipoPrestamoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lblPrestamos)
-                .addGap(230, 230, 230))
             .addGroup(layout.createSequentialGroup()
                 .addGap(108, 108, 108)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(lblCarnet)
                         .addComponent(lblCodigoLibro))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblFecha)))
+                    .addComponent(lblFecha, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -113,7 +120,9 @@ public class RealizarPrestamo extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtFdAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(155, 155, 155)
+                        .addGap(21, 21, 21)
+                        .addComponent(comBoxTipoPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSalir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnGuardar))
@@ -123,13 +132,17 @@ public class RealizarPrestamo extends javax.swing.JFrame {
                             .addComponent(txtFdCarnet, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtFdCodigoLibro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(154, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblPrestamos)
+                .addGap(225, 225, 225))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
+                .addGap(42, 42, 42)
                 .addComponent(lblPrestamos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCodigoLibro)
                     .addComponent(txtFdCodigoLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -149,7 +162,8 @@ public class RealizarPrestamo extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
-                    .addComponent(btnSalir))
+                    .addComponent(btnSalir)
+                    .addComponent(comBoxTipoPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(66, Short.MAX_VALUE))
         );
 
@@ -184,18 +198,49 @@ public class RealizarPrestamo extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, ManejadorDeErrores.ERROR_NO_ES_UN_ENTERO); 
                 }
         }
-    }
-    
+    }    
+   
     private void verificarErrorDatos(String codLibro, String carnetF, int dia, int mes, int anio, int carnet){
-        if(ManejadorDeErrores.revisarRangoDia(dia) && ManejadorDeErrores.revisarRangoMes(mes) && ManejadorDeErrores.revisarRangoAnio(anio)){
+        if(ManejadorDeErrores.revisarRangoDia(dia) && ManejadorDeErrores.revisarRangoMes(mes) && ManejadorDeErrores.revisarRangoAnio(anio)){            
             if(ManejadorDeErrores.verificarCarnet(carnetF) == null){
-                if(verificarCantidadPrestamosActivos(carnet) >= 3){
-                    JOptionPane.showMessageDialog(this, MAS_DE_TRES_LIBROS);
-                }else{
-                    registrarPrestamo(codLibro, carnet, dia, mes, anio);
-                    JOptionPane.showMessageDialog(this, PRESTAMO_REGISTRADO_EXITOSAMENTE);
-                    limpiarCajasTexto();
-                }
+                LocalDate fechaActual;                
+                fechaActual = LocalDate.now();
+                LocalDate fecha = LocalDate.of(anio, mes, dia);
+               if(fecha.isBefore(fechaActual)){
+                   
+                       System.out.println("");
+                       if(LectorArchivos.existenciaEstudiante(carnetF)){
+                           if(LectorArchivos.estudianteEstadoCarnet(carnetF)){
+                               if(LectorArchivos.existenciaLibro(codLibro)){    
+                                   System.out.println(comBoxTipoPrestamo.getSelectedIndex());
+                                   if(comBoxTipoPrestamo.getSelectedIndex() == 0){
+                                       System.out.println();
+                                       if(verificarCantidadPrestamosActivos(carnet) >= 3){
+                                        JOptionPane.showMessageDialog(this, MAS_DE_TRES_LIBROS);
+                                        }else{
+                                           registrarPrestamo(codLibro, carnet, fecha); 
+                                        }                                       
+                                   }else{
+                                       devolverPrestamo(carnet, codLibro, fecha);
+                                   }
+                                                                    
+                                }else{
+                                 JOptionPane.showMessageDialog(this, ManejadorDeErrores.ERROR_LIBOR_NO_EXISTENTE);   
+                                }
+                           }else{
+                               JOptionPane.showMessageDialog(this, ManejadorDeErrores.ERROR_CARNET_NO_ACTIVADO);   
+                           }                           
+                           
+                       }else{
+                         JOptionPane.showMessageDialog(this, ManejadorDeErrores.ERROR_ESTUDIANTE_NO_EXISTENTE);   
+                       }
+                       
+                    
+               }else{
+                   JOptionPane.showMessageDialog(this,  ManejadorDeErrores.ERROR_FECHA_INVALIDO);
+               }               
+                
+                
             }
             else{
                 JOptionPane.showMessageDialog(this, ManejadorDeErrores.ERROR_CARNET_INVALIDO);
@@ -207,17 +252,64 @@ public class RealizarPrestamo extends javax.swing.JFrame {
                             
     }
     
-    private void registrarPrestamo(String codLibro, int carnet, int dia, int mes, int anio){        
+    private void registrarPrestamo(String codLibro, int carnet, LocalDate fecha){        
         try {
-            LocalDate fecha = LocalDate.of(anio, mes, dia);
-            Prestamo prestamo = new Prestamo(codLibro, carnet, fecha); //Creamos un objeto de tipo Prestamo utilizando su contructor
-            ManejadorDeArchivos.crearArchivoPrestamo(prestamo);            
+            try {
+                if(LectorArchivos.buscarLibro(codLibro).getCantidad() > 0){                     
+                    Prestamo prestamo = new Prestamo(codLibro, carnet, fecha); //Creamos un objeto de tipo Prestamo utilizando su contructor
+                    ManejadorDeArchivos.crearArchivoPrestamo(prestamo);
+                    Libro libro = LectorArchivos.buscarLibro(codLibro);
+                    libro.quitarUnaCopia();
+                    ManejadorDeArchivos.crearArchivoLibro(libro);
+                    JOptionPane.showMessageDialog(this, PRESTAMO_REGISTRADO_EXITOSAMENTE);                                      
+                    
+                    limpiarCajasTexto();
+                }else{
+                    JOptionPane.showMessageDialog(this, ManejadorDeErrores.ERROR_NO_HAY_COPIAS_EN_BODEGA);
+                }
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(RealizarPrestamo.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(RealizarPrestamo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                
             
         } catch (IOException ex) {
             Logger.getLogger(RegistrarEstudiante.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    private void devolverPrestamo(int carnet, String codLibro, LocalDate fecha){
+        Prestamo prestamo = null;
+        prestamo = verificarPrestamosActivos(carnet, codLibro);
+        if(prestamo != null){            
+            try {
+                prestamo.setEstado(false);
+                ManejadorDeArchivos.crearArchivoPrestamo(prestamo);                     
+                Libro libro;
+                try {
+                    libro = LectorArchivos.buscarLibro(codLibro);
+                    libro.agregarUnaCopia();                        
+                    ManejadorDeArchivos.crearArchivoLibro(libro);                        
+                    JOptionPane.showMessageDialog(this, PRESTAMO_CANCELADO_EXITOSAMENTE);                                      
+
+                    limpiarCajasTexto();
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(RealizarPrestamo.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(RealizarPrestamo.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            } catch (IOException ex) {
+                Logger.getLogger(RealizarPrestamo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+               
+        }else{
+            JOptionPane.showMessageDialog(this, REGISTRO_NO_EXISTENTE);  
+        }
+                
+    }
+        
     private int verificarCantidadPrestamosActivos(int carnet){
         Prestamo prestamo[] = null;
         int cantidadPrestamosActivos = 0;
@@ -226,18 +318,40 @@ public class RealizarPrestamo extends javax.swing.JFrame {
             prestamo = LectorArchivos.cargarPrestamosExistentes();
             for(int i = 0; i < prestamo.length; i++){                
                 if(prestamo[i].getCarnetEstudiante() == carnet && prestamo[i].isEstado()){
-                    cantidadPrestamosActivos++;                     
+                    cantidadPrestamosActivos++;              
                 }                
-            }
-            
-            return cantidadPrestamosActivos;
+            }                        
         } catch (IOException ex) {
             Logger.getLogger(RealizarPrestamo.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(RealizarPrestamo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }     
+       
         return 0;
+    }
+    
+    private Prestamo verificarPrestamosActivos(int carnet, String codLibro){
+        Prestamo prestamo[] = null;        
+        try {
+            prestamo = LectorArchivos.cargarPrestamosExistentes();
+            
+            for(int i = 0; i < prestamo.length; i++){    
+                String pal = prestamo[i].getCodigoLibro();                
+                if(prestamo[i].getCarnetEstudiante() == carnet){  
+                    if(pal.equals(codLibro)){                       
+                        if(prestamo[i].isEstado()){                        
+                        return prestamo[i];  
+                        }
+                    }                               
+                }                
+            }                        
+        } catch (IOException ex) {
+            Logger.getLogger(RealizarPrestamo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(RealizarPrestamo.class.getName()).log(Level.SEVERE, null, ex);
+        }      
+       
+        return null;
     }
     
     private void limpiarCajasTexto(){
@@ -252,6 +366,10 @@ public class RealizarPrestamo extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void comBoxTipoPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comBoxTipoPrestamoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comBoxTipoPrestamoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -291,6 +409,7 @@ public class RealizarPrestamo extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JComboBox<String> comBoxTipoPrestamo;
     private javax.swing.JLabel lblAnio;
     private javax.swing.JLabel lblCarnet;
     private javax.swing.JLabel lblCodigoLibro;

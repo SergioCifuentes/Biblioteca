@@ -11,6 +11,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -71,6 +73,44 @@ public class LectorArchivos {
 
         return estudiante;
     }
+    
+    public static boolean existenciaEstudiante(String carnet){
+        try {
+            if(buscarEstudiante(carnet) != null)
+                return true;
+        } catch (IOException ex) {
+            Logger.getLogger(LectorArchivos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(LectorArchivos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    public static boolean existenciaLibro(String codigo){
+        try {
+            if(buscarLibro(codigo) != null){
+                return true;
+            }           
+            
+        } catch (IOException ex) {
+            Logger.getLogger(LectorArchivos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(LectorArchivos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    public static boolean estudianteEstadoCarnet(String carnet){
+        try {
+            return buscarEstudiante(carnet).isEstadoCarnet();
+        } catch (IOException ex) {
+            Logger.getLogger(LectorArchivos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(LectorArchivos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
     //Metodo devuelve un prestamos ya existente segun el carnet del estudiante
     protected static Prestamo[] cargarPrestamosExistentes() throws IOException, FileNotFoundException, ClassNotFoundException {
         Prestamo[] prestamo = null;
@@ -95,7 +135,6 @@ public class LectorArchivos {
                     prestamos.add(prestamosTodos[i]);
                 }
             }
-
         }
         if (prestamos.isEmpty()) {
             prestamos=null;

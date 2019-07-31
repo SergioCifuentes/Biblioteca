@@ -323,7 +323,7 @@ public class Tabla extends javax.swing.JDialog {
     }//GEN-LAST:event_btnColumna3ActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        this.setVisible(false);
+        dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
 

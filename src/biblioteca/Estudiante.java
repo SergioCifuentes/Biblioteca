@@ -16,6 +16,7 @@ public class Estudiante implements Serializable{
     private int carnet;
     private String nombre;
     private int carrera;
+    private boolean estadoCarnet;
     LocalDate fechaDeNacimiento;
 
     public LocalDate getFechaDeNacimiento() {
@@ -43,5 +44,16 @@ public class Estudiante implements Serializable{
         this.nombre = nombre;
         this.carrera = carrer;
         this.fechaDeNacimiento=null;
+        this.estadoCarnet = true;
     }
+
+    public boolean isEstadoCarnet() {
+        return estadoCarnet;
+    }
+
+    public void setEstadoCarnet(boolean estadoCarnet) {
+        this.estadoCarnet = estadoCarnet;
+    }
+    
+    
 }

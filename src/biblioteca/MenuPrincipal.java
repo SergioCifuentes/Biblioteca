@@ -100,7 +100,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
 
         btnRealizarPrestamos.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
-        btnRealizarPrestamos.setText("Realizar prestamo");
+        btnRealizarPrestamos.setText("Prestamos");
         btnRealizarPrestamos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRealizarPrestamosActionPerformed(evt);
@@ -240,16 +240,15 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRealizarPrestamosActionPerformed
 
     private void btnGenerarReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReportesActionPerformed
-        Reportes reportes = null;
         try {
+            Reportes reportes = null;
             reportes = new Reportes();
             reportes.setVisible(true);
         } catch (IOException ex) {
             Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }        
     }//GEN-LAST:event_btnGenerarReportesActionPerformed
 
     /**

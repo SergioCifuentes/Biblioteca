@@ -57,4 +57,12 @@ public class Libro implements Serializable{
     public int getCantidad() {
         return cantidad;
     }
+    
+    public void quitarUnaCopia(){
+        this.cantidad -= 1;
+    }
+    
+    public void agregarUnaCopia(){
+        this.cantidad += 1;
+    }
 }
