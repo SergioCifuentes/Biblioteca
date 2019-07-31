@@ -109,6 +109,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         btnGenerarReportes.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         btnGenerarReportes.setText("Generar reportes");
+        btnGenerarReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarReportesActionPerformed(evt);
+            }
+        });
 
         txtResultados.setColumns(20);
         txtResultados.setRows(5);
@@ -236,6 +241,18 @@ public class MenuPrincipal extends javax.swing.JFrame {
         realizarPrestamo.setVisible(true);
         
     }//GEN-LAST:event_btnRealizarPrestamosActionPerformed
+
+    private void btnGenerarReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReportesActionPerformed
+        Reportes reportes = null;
+        try {
+            reportes = new Reportes();
+        } catch (IOException ex) {
+            Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        reportes.setVisible(true);
+    }//GEN-LAST:event_btnGenerarReportesActionPerformed
 
     /**
      * @param args the command line arguments

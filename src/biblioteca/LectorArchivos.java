@@ -103,5 +103,24 @@ public class LectorArchivos {
 
         return prestamos;
     }
+    
+//Metodo que devuelve el conjunto de prestamos dependiendo de la carnet
+    protected static ArrayList<Prestamo> buscarPrestamosPorCarnet(int carnet) throws IOException, FileNotFoundException, ClassNotFoundException {
+        ArrayList<Prestamo> prestamos = new ArrayList();
+        Prestamo[] prestamosTodos = cargarPrestamosExistentes();
+        if (prestamosTodos != null) {
+            for (int i = 0; i < prestamosTodos.length; i++) {
+                if (buscarEstudiante(String.valueOf(prestamosTodos[i].getCarnetEstudiante())).getCarnet() == carnet) {
+                    prestamos.add(prestamosTodos[i]);
+                }
+            }
+
+        }
+        if (prestamos.isEmpty()) {
+            prestamos=null;
+        }
+
+        return prestamos;
+    }
 
 }

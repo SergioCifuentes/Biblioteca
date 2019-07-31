@@ -91,7 +91,7 @@ public class Tabla extends javax.swing.JDialog {
                     tblRegistros.setValueAt(libros[i].getAutor(), i, 2);//autor
                     tblRegistros.setValueAt(libros[i].getCantidad(), i, 3);//cantidad
                     if (libros[i].getFechaPublicacion()!= null) {
-                        tblRegistros.setValueAt(libros[i].getFechaPublicacion().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), i, 4);//Fecha
+                            tblRegistros.setValueAt(libros[i].getFechaPublicacion().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), i, 4);//Fecha
                     } else {
                         tblRegistros.setValueAt("---", i, 4);
                     }

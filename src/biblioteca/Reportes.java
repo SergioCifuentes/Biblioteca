@@ -7,9 +7,11 @@ package biblioteca;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -46,7 +48,8 @@ public class Reportes extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         lblErrorPresXEstud = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblPresXEstud = new javax.swing.JTable();
+        lblErrorPXENoRegistro = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         txtCarnetLibro = new javax.swing.JTextField();
         btnBuscarLibro = new javax.swing.JButton();
@@ -59,6 +62,8 @@ public class Reportes extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tbtPresXCarrera = new javax.swing.JTable();
         lblErrorPresXCarrera = new javax.swing.JLabel();
+        btnRegresar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -76,7 +81,7 @@ public class Reportes extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 296, Short.MAX_VALUE)
+            .addGap(0, 268, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Prestamos Para Hoy", jPanel1);
@@ -89,7 +94,7 @@ public class Reportes extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 296, Short.MAX_VALUE)
+            .addGap(0, 268, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Prestamos En Mora", jPanel2);
@@ -102,18 +107,23 @@ public class Reportes extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 296, Short.MAX_VALUE)
+            .addGap(0, 268, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Ingresos", jPanel3);
 
         btnBuscarPresXEstud.setText("Buscar");
+        btnBuscarPresXEstud.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarPresXEstudActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Carnet:");
 
         lblErrorPresXEstud.setText("Carnet Invalido");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblPresXEstud.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -121,28 +131,35 @@ public class Reportes extends javax.swing.JFrame {
                 "Codigo De Libro", "Fecha De Prestamo", "Estado"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tblPresXEstud);
+
+        lblErrorPXENoRegistro.setText("No Existen Registros");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(358, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 635, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 51, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtCarnetPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
-                        .addComponent(btnBuscarPresXEstud)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(lblErrorPresXEstud, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(125, 125, 125))))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 647, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .addComponent(lblErrorPresXEstud, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(125, 125, 125))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .addComponent(lblErrorPXENoRegistro)
+                                .addGap(121, 121, 121)
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtCarnetPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(btnBuscarPresXEstud)
+                                .addContainerGap())))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,12 +168,13 @@ public class Reportes extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCarnetPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscarPresXEstud)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(lblErrorPXENoRegistro))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblErrorPresXEstud)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(99, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Prestamos Por Estudiante", jPanel4);
@@ -211,7 +229,7 @@ public class Reportes extends javax.swing.JFrame {
                 .addComponent(lblErrorLibro)
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(105, Short.MAX_VALUE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Libros Por Estudiante", jPanel5);
@@ -265,26 +283,49 @@ public class Reportes extends javax.swing.JFrame {
                     .addComponent(lblErrorPresXCarrera))
                 .addGap(63, 63, 63)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Prestamos Por Carrera", jPanel6);
+
+        btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        jLabel3.setText("Reportes");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnRegresar)
+                .addGap(64, 64, 64))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 706, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 706, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(301, 301, 301)
+                        .addComponent(jLabel3)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(42, Short.MAX_VALUE)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRegresar)
+                .addGap(17, 17, 17))
         );
 
         pack();
@@ -298,7 +339,8 @@ public class Reportes extends javax.swing.JFrame {
 
     private void comBCarrerasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comBCarrerasActionPerformed
         try {
-            recetearTablaPrestamoXCarrera();
+            lblErrorPresXCarrera.setVisible(false);
+            recetearTabla(tbtPresXCarrera);
             cargarPrestamosPorCarrera();
         } catch (IOException ex) {
             Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, ex);
@@ -306,44 +348,104 @@ public class Reportes extends javax.swing.JFrame {
             Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_comBCarrerasActionPerformed
-    private void ocultarMensajesDeError(){
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnBuscarPresXEstudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPresXEstudActionPerformed
+        ocultarMensajesDeError();
+        recetearTabla(tblPresXEstud);
+        try {
+            //Verificacion deque se ingrese un entero
+            int num =  Integer.valueOf(txtCarnetPrestamo.getText());
+        } catch (NumberFormatException e) {
+            lblErrorPresXEstud.setVisible(true);
+        }
+        //Verificaccion que el carnet sea de 9 digitos
+        if (lblErrorPresXEstud.isVisible()==false && txtCarnetPrestamo.getText().length()==9) {
+            try {
+            lblErrorPresXEstud.setVisible(false);
+            lblErrorPXENoRegistro.setVisible(false);            
+            cargarPrestamosPorEsudiante();
+        } catch (IOException | ClassNotFoundException | NumberFormatException ex) {
+            Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }else{
+            lblErrorPresXEstud.setVisible(true);
+        }
+        
+    }//GEN-LAST:event_btnBuscarPresXEstudActionPerformed
+   //Metodo que oculta todos los mensajes errores
+    private void ocultarMensajesDeError() {
+        lblErrorPXENoRegistro.setVisible(false);
+        lblErrorPresXEstud.setVisible(false);
+        lblErrorLibro.setVisible(false);
         lblErrorPresXCarrera.setVisible(false);
     }
-    private void cargarTodasLasEstadisticas() throws IOException, FileNotFoundException, ClassNotFoundException{
+
+    private void cargarTodasLasEstadisticas() throws IOException, FileNotFoundException, ClassNotFoundException {
         cargarPrestamosPorCarrera();
     }
-    private void cargarPrestamosPorCarrera() throws IOException, FileNotFoundException, ClassNotFoundException{
-        
-        agregarATablaPrestamosPorCarrera(LectorArchivos.buscarPrestamosPorCarrera(comBCarreras.getSelectedIndex()+1));
+
+    private void cargarPrestamosPorEsudiante() throws IOException, FileNotFoundException, ClassNotFoundException {
+        agregarATablaPrestamosPorEstudiante(LectorArchivos.buscarPrestamosPorCarnet(Integer.valueOf(txtCarnetPrestamo.getText())));
     }
-    private void agregarATablaPrestamosPorCarrera(ArrayList<Prestamo> prestamos){
-        if (prestamos!=null) {
+
+    private void cargarPrestamosPorCarrera() throws IOException, FileNotFoundException, ClassNotFoundException {
+        agregarATablaPrestamosPorCarrera(LectorArchivos.buscarPrestamosPorCarrera(comBCarreras.getSelectedIndex() + 1));
+    }
+//Agrega los prestamos a la tabla prestamosPorCarrera
+    private void agregarATablaPrestamosPorCarrera(ArrayList<Prestamo> prestamos) {
+        if (prestamos != null) {
             DefaultTableModel model = (DefaultTableModel) tbtPresXCarrera.getModel();
-                for (int i = 0; i < prestamos.size(); i++) {//Creacion de Celdas
-                    model.addRow(new Object[]{"", "", "", ""});
-                }
+            for (int i = 0; i < prestamos.size(); i++) {//Creacion de Celdas
+                model.addRow(new Object[]{"", "", "", ""});
+            }
             for (int i = 0; i < prestamos.size(); i++) {
-                    tbtPresXCarrera.setValueAt(prestamos.get(i).getCarnetEstudiante(), i, 0);//codigo
-                    tbtPresXCarrera.setValueAt(prestamos.get(i).getCodigoLibro(), i, 1);//titulo
-                    tbtPresXCarrera.setValueAt(prestamos.get(i).getFecha(), i, 2);//autor
-                    
+                tbtPresXCarrera.setValueAt(prestamos.get(i).getCarnetEstudiante(), i, 0);//codigo
+                tbtPresXCarrera.setValueAt(prestamos.get(i).getCodigoLibro(), i, 1);//titulo
+                tbtPresXCarrera.setValueAt(prestamos.get(i).getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), i, 2);//Fecha
+                if (prestamos.get(i).isEstado()) {
+                    tbtPresXCarrera.setValueAt("Activo", i, 3);//estado
+                } else {
+                    tbtPresXCarrera.setValueAt("Desactivo", i, 3);//estado
                 }
-        }else{
-            
+            }
+        } else {
             lblErrorPresXCarrera.setVisible(true);
         }
     }
-    private void recetearTablaPrestamoXCarrera(){
-        DefaultTableModel model = (DefaultTableModel) tbtPresXCarrera.getModel();
-        System.out.println(model.getRowCount());
-        if (model.getRowCount()>0) {
-            for (int i = model.getRowCount()-1; i >= 0; i--) {//Creacion de Celdas
-                    
-                    model.removeRow(0);
-
+//Agrega Prestamos a la tabla de Estudiantes
+    private void agregarATablaPrestamosPorEstudiante(ArrayList<Prestamo> prestamos) {
+        if (prestamos != null) {
+            DefaultTableModel model = (DefaultTableModel) tblPresXEstud.getModel();
+            for (int i = 0; i < prestamos.size(); i++) {//Creacion de Celdas
+                model.addRow(new Object[]{"", "", "", ""});
+            }
+            for (int i = 0; i < prestamos.size(); i++) {
+                tblPresXEstud.setValueAt(prestamos.get(i).getCodigoLibro(), i, 0);//Codigo
+                tblPresXEstud.setValueAt(prestamos.get(i).getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), i, 1);//Fecha
+                if (prestamos.get(i).isEstado()) {
+                    tblPresXEstud.setValueAt("Activo", i, 2);//estado
+                } else {
+                    tblPresXEstud.setValueAt("Desactivo", i, 2);//estado
                 }
+
+            }
+        } else {
+            lblErrorPXENoRegistro.setVisible(true);
         }
-                
+    }
+//Borra las celdas de la talba que se envia de parametro
+    private void recetearTabla(JTable tabla) {
+        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+        System.out.println(model.getRowCount());
+        if (model.getRowCount() > 0) {
+            for (int i = model.getRowCount() - 1; i >= 0; i--) {//Creacion de Celdas
+                model.removeRow(0);
+            }
+        }
     }
     /**
      * @param args the command line arguments
@@ -353,9 +455,11 @@ public class Reportes extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarLibro;
     private javax.swing.JButton btnBuscarPresXEstud;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JComboBox<String> comBCarreras;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -367,10 +471,11 @@ public class Reportes extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JLabel lblErrorLibro;
+    private javax.swing.JLabel lblErrorPXENoRegistro;
     private javax.swing.JLabel lblErrorPresXCarrera;
     private javax.swing.JLabel lblErrorPresXEstud;
+    private javax.swing.JTable tblPresXEstud;
     private javax.swing.JTable tbtPresXCarrera;
     private javax.swing.JTextField txtCarnetLibro;
     private javax.swing.JTextField txtCarnetPrestamo;
